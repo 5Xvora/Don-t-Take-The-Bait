@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '.env', override: true });
 
 const nextConfig: NextConfig = {
+  output: 'export',          // <--- أضفنا هذا السطر عشان يتحول لملفات ثابتة (HTML/JS)
   reactStrictMode: false,
   turbopack: {},
   typescript: {
@@ -18,7 +19,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [
     '**.*.*',
   ],
+  images: {
+    unoptimized: true,       // <--- وأضفنا هذا السطر عشان الصور ما تتعطل على جيت هب
+  },
 };
 
 export default nextConfig;
-
