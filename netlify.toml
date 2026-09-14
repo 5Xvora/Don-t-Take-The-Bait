@@ -1,13 +1,14 @@
 [build]
-  command = "npm run build"
+  command = "pnpm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
   PNPM_FLAGS = "--no-frozen-lockfile --unsafe-perm=true"
 
-[[redirects]]
+  [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/"
   status = 200
+  force = false
   
