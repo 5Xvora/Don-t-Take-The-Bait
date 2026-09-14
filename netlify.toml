@@ -6,7 +6,7 @@
   NODE_VERSION = "20"
   PNPM_FLAGS = "--no-frozen-lockfile --unsafe-perm=true"
 
-  [[redirects]]
+[[redirects]]
   from = "/*"
   to = "/"
   status = 200
