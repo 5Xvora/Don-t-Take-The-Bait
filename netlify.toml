@@ -5,4 +5,9 @@
 [build.environment]
   NODE_VERSION = "20"
   PNPM_FLAGS = "--no-frozen-lockfile --unsafe-perm=true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
   
