@@ -20,34 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "pnpm-lock.yaml" ]; then
-            echo "manager=pnpm" >> $GITHUB_ENV
-            echo "command=install" >> $GITHUB_ENV
-            echo "runner=pnpm" >> $GITHUB_ENV
-            exit 0
-          elif [ -f "package-lock.json" ]; then
-            echo "manager=npm" >> $GITHUB_ENV
-            echo "command=ci" >> $GITHUB_ENV
-            echo "runner=npx --no-install" >> $GITHUB_ENV
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ env.manager }}
-      - name: Setup pnpm
-        if: env.manager == 'pnpm'
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-          run_install: false
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Restore cache
@@ -55,14 +31,14 @@ jobs:
         with:
           path: |
             .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml', '**/package-lock.json') }}-${{ hashFiles('**.[jt]sx?', '**.[jt]s') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]sx?', '**.[jt]s') }}
           restore-keys: |
-            - ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml', '**/package-lock.json') }}-
+            - ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
         continue-on-error: true
       - name: Install dependencies
-        run: ${{ env.manager }} install
+        run: npm ci
       - name: Build with Next.js
-        run: ${{ env.manager }} run build
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -78,4 +54,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
