@@ -6,6 +6,8 @@ dotenv.config({ path: '.env', override: true });
 
 const nextConfig: NextConfig = {
   output: 'export',          // <--- أضفنا هذا السطر عشان يتحول لملفات ثابتة (HTML/JS)
+  basePath: '/Don-t-Take-The-Bait',     // <--- أضيفي هذا السطر
+  assetPrefix: '/Don-t-Take-The-Bait/', // <--- وأضيفي هذا السطر
   reactStrictMode: false,
   turbopack: {},
   typescript: {
